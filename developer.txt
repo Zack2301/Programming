@@ -1,0 +1,70 @@
+
+import java.util.ArrayList;
+import java.util.*;
+import java.io.IOException;
+
+
+public class DeveloperAccount extends Account{
+
+protected static int numberOfAppsUploaded = 0;
+private static int developerApp;
+private static int developerCount;
+
+
+public DeveloperAccount(int id,String name, String address, String profession) throws IOException{
+super(id,name, address, profession);  
+setNumberOfDeveloperApp(5);
+displayUploads();
+}
+
+public DeveloperAccount(int id, String name, String address, String profession,int developerCount) {
+super(id , name, address, profession);
+this.developerCount = developerCount;
+}
+
+public DeveloperAccount() throws IOException{
+super();
+setNumberOfDeveloperApp(5);
+displayUploads();
+}
+      
+   
+    
+public void setNumberOfDeveloperApp(int number){
+developerApp = number ;
+}    
+
+public static int getDeveloperAppsUploaded() throws IOException
+   {
+     if(developerApp > 0)
+     {
+     numberOfAppsUploaded = developerApp;  
+     return numberOfAppsUploaded;
+     }
+     else
+      return 0;
+     }
+
+public void displayUploads() throws IOException{
+    System.out.print("Apps Uploaded:" + getDeveloperAppsUploaded());
+}
+
+public void setDeveloperCount(int devCount)
+{
+this.developerCount = devCount;
+}
+
+public static int getDeveloperCount(){
+  if(developerCount == 0){
+      return 1;
+     }
+     return developerCount;
+    }   
+   }
+   
+    
+
+ 
+               
+               
+        
