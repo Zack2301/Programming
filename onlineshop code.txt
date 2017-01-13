@@ -1,0 +1,317 @@
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Scanner;
+
+    
+    public class OnlineShop 
+{
+//private Apps shopApps;
+//private Account accounts; // variable pointing to the account aggregation class
+//private Storage shopStorage;// variable pointing to the association storage class
+
+ArrayList<String>newApp; 
+ HashMap<Integer, String>newAccount = new HashMap<>();
+String fileLine = "";
+File appFile;
+File accountFile = new File("C:\\accountfolder/account.txt");
+int check;
+
+public OnlineShop() throws IOException
+{
+        this.appFile = new File("C:\\appsfolder/app.txt");
+	char check, ignore;
+   first: for(;;){
+	   do{
+		 displayMenu();
+		 check = (char)System.in.read(); 
+		 do{
+			ignore = (char) System.in.read();
+		 }while(ignore !='\n');
+	     }while (!isValid(check));
+	   if(check == 'q'){System.out.println("Quiting...");
+	   break first ;}
+	   else{
+	   System.out.println("\n");
+	   check(check);
+	   
+	   }
+   }
+}
+
+public void check(int check) throws IOException{
+	
+	switch(check){
+	case '0':
+                addNewApp();
+	break;
+	case '1':
+		editApp();
+	break;
+	case '2':
+		listApp();
+	break;
+	case '3':
+		searchApp();
+	break;
+	case '4':
+		deleteApp();
+	break;
+	case '5':
+		addNewAccount();
+	break;
+	case '6':
+		editAccount();
+	break;
+	case '7':
+		listAccounts();
+	break;
+	case '8':
+		searchAccounts();
+	break;
+	case '9':
+		deleteAccount();
+	break;
+	}
+}	
+
+boolean isValid(int ch){
+	
+	if(ch < '1' | ch > '9' & ch!='q')return false;
+	else return true;
+}
+
+
+public void displayMenu()
+{
+  System.out.println("Apps Options ");
+  System.out.println("   0.Add new App ");
+  System.out.println("   1.Edit App ");
+  System.out.println("   2.List Apps ");
+  System.out.println("   3.Search App");
+  System.out.println("   4.Delete App ");
+  System.out.println("Account Options");
+  System.out.println("   5.Add new Account");
+  System.out.println("   6.Edit Account ");
+  System.out.println("   7.List Accounts ");
+  System.out.println("   8.Search Account ");
+  System.out.println("   9.Delete Account");
+  System.out.println("Choose one (Type q to quit): ");
+}
+
+public void addNewApp()
+ {
+  System.out.println("New Apps");
+  newApp = new ArrayList<>();
+  newApp.add("Fifa 16");
+  newApp.add("Metal Gear Solid");
+  newApp.add("GTA");
+  newApp.add("Call Of Duty"); 
+  newApp.add("Google Now");
+  newApp.add("Mail Online");
+  
+try(
+    BufferedWriter bw = new BufferedWriter(new FileWriter(appFile)))
+    {
+    for (String app: newApp)
+     {  
+     bw.write(app);
+     bw.newLine();
+     } 
+    }
+    catch(IOException e)
+    {
+    System.err.println("Error " + e.getMessage()); 
+    }
+  }
+
+
+public void editApp()throws IOException
+ {
+   System.out.println("Update App");
+   Scanner scan = new Scanner(System.in);
+   String st = scan.next();
+   newApp.add(0,st);
+   
+   try(BufferedWriter bw = new BufferedWriter(new FileWriter(appFile)))
+   {
+   for(String app: newApp) 
+   bw.write(app);
+   }
+   catch(IOException e){
+   System.err.print("Error" + e.getMessage());
+   }  
+ }
+
+
+ public void listApp()throws IOException
+ {
+   try(
+      BufferedReader br = new BufferedReader(new FileReader(appFile)))
+      {
+      while((fileLine = br.readLine()) != null)
+      {
+      System.out.println(fileLine);
+      }
+      System.out.println('\n');
+      }
+      catch(IOException e)
+      {
+      System.err.println("Error" + e.getMessage());
+     }  
+  }
+ 
+ 
+  public void searchApp() throws IOException
+   {
+    System.out.println("Enter a App Name");
+    Scanner ss = new Scanner(System.in);
+    String s = ss.next();
+     
+    Scanner st = new Scanner(appFile);
+    String line = st.next();
+     
+    if(s.equals(line.contains("Fifa 16")))
+     {
+     System.out.println("App Search Result " + s);//not executing 
+     }
+    else
+     System.out.println("It does not Exist in the shop");   
+   }
+  
+  
+  public void deleteApp()
+  {
+      System.out.println("Enter App You Wish to Delete");
+      Scanner scs = new Scanner(System.in);
+      String apps = scs.next();
+     
+      System.out.println("Please Type Yes to Confirm Deletion or No to Abort");
+      String ap = scs.next();
+      if(ap.equals("Yes"))
+      {
+        newApp.remove(apps);
+        System.out.println("App has been DELETED"); 
+      }else{
+       System.exit(0);
+      }
+  }
+  
+public void addNewAccount() throws IOException// method to add new account
+{
+   new HashMap<Integer ,String>();
+   newAccount.put(1, "Graeme");
+   newAccount.put(2, "David");
+   newAccount.put(3, "Beryl");
+   newAccount.put(4, "James");
+   newAccount.put(5, "Mohammed");
+   newAccount.put(6, "Dom");
+   
+   try(BufferedWriter bw = new BufferedWriter(new FileWriter(accountFile)))
+   {
+   newAccount.forEach((Integer i, String s) ->
+    {
+    try{
+        bw.write(i + " " + s); 
+        bw.newLine(); 
+        } 
+        catch (IOException ex) 
+        {
+        System.err.println("Error");
+        }         
+     }); 
+  }
+}
+   
+ public void editAccount() throws IOException
+ { 
+     System.out.println("Edit Account");
+     Scanner sc = new Scanner(System.in);
+     int key = sc.nextInt();
+     String str = sc.next();
+        
+        if(newAccount.containsValue("Graeme"))
+         {
+          newAccount.put(key, str);
+    
+         try(BufferedWriter bw = new BufferedWriter(new FileWriter(accountFile)))
+         { 
+          newAccount.forEach((Integer i, String s) ->
+         {
+         try {
+                 bw.write(i + " " + s); 
+                 bw.newLine();  
+                 newAccount.remove("Graeme");
+                } 
+                catch (IOException ex) 
+                {
+                 System.err.println("Error");
+                }         
+            }); 
+          }
+        }
+    }
+
+ 
+ public void listAccounts()throws IOException
+ {
+   try(       
+    BufferedReader br = new BufferedReader(new FileReader(accountFile)))
+    {
+    while(fileLine != null)
+     {
+     fileLine = br.readLine();
+       
+     if(fileLine != null)
+     {
+     System.out.println(fileLine);
+     }  
+     }
+      System.out.println('\n');
+    }
+    catch(IOException e)
+    {
+    System.err.println("Error" + e.getMessage());
+    } 
+ }
+  
+ public void searchAccounts()
+ {
+  System.out.println("Enter an Account ID"); 
+  Scanner scans = new Scanner(System.in);
+  int v = scans.nextInt();
+  String value = newAccount.get(v);
+  System.out.println("Account ID is " + v + " and the Account Name is " + value);
+ }
+ 
+ public void deleteAccount()
+ {
+     if(newAccount.containsKey(3))
+    {
+     newAccount.remove(3);
+     } 
+     System.out.println(newAccount.values());
+     System.out.println("The shop Accounts have been altered!!"); 
+ }
+}
+ 
+    
+ 
+ 
+
+
+
+
+
+
+
+
